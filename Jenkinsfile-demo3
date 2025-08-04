@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Clone Repo') {
+            steps {
+                git url: 'https://github.com/pjyoti1395/my-local-development-app.git', branch: 'master'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo 'Simulating Build Process...'
+                sh 'echo "Building project..."'
+                sh 'sleep 2'  // simulate time
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Running Tests...'
+                sh 'echo "Tests passed!"'
+                // OR run real tests: e.g. `npm test`, `pytest`, `mvn test` etc.
+            }
+        }
+    }
+
+    post {
+        success {
+            echo '✅ Pipeline completed successfully.'
+        }
+        failure {
+            echo '❌ Build failed. Check the logs.'
+        }
+    }
+}
