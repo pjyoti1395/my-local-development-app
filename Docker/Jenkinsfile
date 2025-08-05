@@ -49,7 +49,7 @@ pipeline
                 )
             ]) {
                 sh 'echo $PASSWORD | docker login -u $USERNAME --password-stdin'
-                sh 'docker tag java-demo-app jyoti9513/java-demo-app'      // 👈 DockerHub path
+                sh 'docker tag $IMAGE_NAME jyoti9513/$IMAGE_NAME'      // 👈 DockerHub path
                 sh 'docker push jyoti9513/java-demo-app'
             }
         }
