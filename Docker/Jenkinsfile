@@ -17,7 +17,9 @@ pipeline
 
         stage('Build Java App') {
             steps {
-                sh 'javac Docker/main.java'  // or use `mvn package` if using Maven
+                
+                sh 'javac Docker/Main.java'    // or use `mvn package` if using Maven
+
             }
         }
 
