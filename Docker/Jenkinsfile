@@ -11,7 +11,7 @@ pipeline
         stage('Checkout') {
             steps {
                 git 'https://github.com/pjyoti1395/my-local-development-app.git'
-' 
+
             }
         }
 
