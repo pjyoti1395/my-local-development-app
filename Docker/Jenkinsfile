@@ -1,0 +1,63 @@
+pipeline 
+{
+  agent any
+
+    environment {
+        IMAGE_NAME = "my-java-app"
+        DOCKER_REGISTRY = "docker.io/jyoti9513" // optional, if pushing
+    }
+
+  stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/my-local-development-app.git'
+            }
+        }
+
+        stage('Build Java App') {
+            steps {
+                sh 'javac Main.java'  // or use `mvn package` if using Maven
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t $IMAGE_NAME .'
+            }
+        }
+
+        stage('Run Docker Container') {
+            steps {
+                sh 'docker run -d -p 8080:8080 $IMAGE_NAME'
+            }
+        }
+
+        // Optional stage if you want to push to DockerHub
+    
+      stage('Push to DockerHub') {
+        
+        steps {
+            withCredentials([
+                usernamePassword(
+                    credentialsId: 'docker',   // 👈 your Jenkins credential ID
+                    usernameVariable: 'USERNAME',
+                    passwordVariable: 'PASSWORD'
+                )
+            ]) {
+                sh 'echo $PASSWORD | docker login -u $USERNAME --password-stdin'
+                sh 'docker tag java-demo-app jyoti9513/java-demo-app'      // 👈 DockerHub path
+                sh 'docker push jyoti9513/java-demo-app'
+            }
+        }
+}
+
+       
+    }
+
+    post {
+        always {
+            echo "Pipeline completed"
+        }
+    }
+   
+}
