@@ -10,7 +10,8 @@ pipeline
   stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/my-local-development-app.git/' 
+                git 'https://github.com/pjyoti1395/my-local-development-app.git'
+' 
             }
         }
 
