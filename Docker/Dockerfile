@@ -12,10 +12,12 @@ LABEL description="A simple Java application"
 WORKDIR /usr/src/app/
 
 # copy source code into the container 
-COPY Main.java /usr/src/app/
+COPY Docker/Main.java Main.java
 
 # Compile the java code
 RUN javac Main.java
 
 # Run the Java application when the container starts 
 CMD ["java", "Main"]
+
+
